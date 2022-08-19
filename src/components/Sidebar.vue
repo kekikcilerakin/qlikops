@@ -37,7 +37,42 @@ const ToggleMenu = () => {
 	is_expanded.value = !is_expanded.value
 	localStorage.setItem("is_expanded", is_expanded.value)
 }
+//AKN start
+import config from "../qConfig";
+// QRS Endpoints
+const appUrl = `${config.protocol}//${config.host}${config.prefix}qrs/app/full?xrfkey=${config.xrfkey}`;
+const sheetUrl = `${config.protocol}//${config.host}${config.prefix}qrs/app/object/full?filter=(objectType eq 'sheet')&xrfkey=${config.xrfkey}`;
+const streamUrl = `${config.protocol}//${config.host}${config.prefix}qrs/stream/full?xrfkey=${config.xrfkey}`;
+const fullUsersUrl = `${config.protocol}//${config.host}${config.prefix}qrs/user/full?filter=(@TestRole eq 'Starter' or @TestRole eq 'None' or @TestRole eq 'Tester')&xrfkey=${config.xrfkey}`;
+const createCustomPropUrl = `${config.protocol}//${config.host}${config.prefix}qrs/CustomPropertyDefinition?xrfkey=${config.xrfkey}`;
+const getFullCustomPropertyUrl = `${config.protocol}//${config.host}${config.prefix}qrs/custompropertydefinition/full?xrfkey=${config.xrfkey}`;
+// QPS Endpoints
+const userUrl = `${config.protocol}//${config.host}${config.prefix}qps/user`;
+// const userUrl = `${config.protocol}//${config.host}${config.prefix}qrs/user?xrfkey=${config.xrfkey}`;
 
+let authUser = null;
+let authUsername = null;
+
+const getUserInfo = () => {
+	console.log("userURL", userUrl);
+	fetch(userUrl, config).then(function(res) {
+		console.log("res", res.json());
+		console.log("resdata", res.data);
+		if (res.data) {
+			authUser = res.data.userId;
+			authUsername = res.data.userName;
+			console.log("authUser", authUser);
+			console.log("authUsername", authUsername);
+		}
+		else {
+			console.log("yow");
+		}
+	});
+}
+const testAKN = () => {
+	console.log("123", config.protocol);
+}
+//AKN end
 </script>
 
 <style lang="scss" scoped>
